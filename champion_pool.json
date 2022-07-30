@@ -1,0 +1,7 @@
+{
+    "Tier1": {"champion_qty": 29, "pool_size":377},
+    "Tier2": {"champion_qty": 22, "pool_size":286},
+    "Tier3": {"champion_qty": 18, "pool_size":234},
+    "Tier4": {"champion_qty": 12, "pool_size": 84},
+    "Tier5": {"champion_qty": 10, "pool_size": 50}
+}
