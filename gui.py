@@ -1,17 +1,24 @@
 from cgitb import text
 import tkinter
+import odds_calc
+import myplot
 
 class tft_gui(tkinter.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         
         def change_label(event):
-            lb_tier_lvl.config(text=om_tier_level.get())
-            lb_titan_lvl.config(text=om_titan_level.get())
+            tier = om_tier_level.get()
+            titan_lvl = om_titan_level.get()
+            lb_tier_lvl.config(text=tier)
+            lb_titan_lvl.config(text=titan_lvl)
+            print(odds_calc.three_star_reroll_cost(titan_lvl, tier))
         
         # tk Variables
         om_titan_level = tkinter.StringVar()
+        om_titan_level.set("Level_1")
         om_tier_level = tkinter.StringVar()
+        om_tier_level.set("Tier1")
 
         # label creation & position
         lb_tier_lvl = tkinter.Label(self, text=om_tier_level)
@@ -26,12 +33,9 @@ class tft_gui(tkinter.Frame):
         
         champ_tier_options = ["Tier1","Tier2","Tier3","Tier4","Tier5"]
         self.om_tier_lvl = tkinter.OptionMenu(self, om_tier_level, *champ_tier_options, command=change_label).pack()
-        
-        # append to the parent widget
-        self.pack()
 
 if __name__ == "__main__":
     top = tkinter.Tk()
-    gui = tft_gui(top)
-    
+    tft_gui(top).pack()
+    myplot.ric_plot(top).pack()
     top.mainloop()
