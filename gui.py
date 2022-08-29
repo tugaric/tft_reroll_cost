@@ -1,6 +1,6 @@
 from cgitb import text
 import tkinter
-import odds_calc
+import odds_calc as oc
 import myplot
 
 class tft_gui(tkinter.Frame):
@@ -12,7 +12,7 @@ class tft_gui(tkinter.Frame):
             titan_lvl = om_titan_level.get()
             lb_tier_lvl.config(text=tier)
             lb_titan_lvl.config(text=titan_lvl)
-            print(odds_calc.three_star_reroll_cost(titan_lvl, tier))
+            
         
         # tk Variables
         om_titan_level = tkinter.StringVar()
@@ -37,5 +37,5 @@ class tft_gui(tkinter.Frame):
 if __name__ == "__main__":
     top = tkinter.Tk()
     tft_gui(top).pack()
-    myplot.ric_plot(top).pack()
+    myplot.ric_plot(top,"Level_6", "Tier3").pack()
     top.mainloop()
