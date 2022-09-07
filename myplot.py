@@ -1,4 +1,5 @@
 import tkinter as tk
+from functools import partial
 import odds_calc as oc
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (
@@ -15,33 +16,26 @@ class ric_plot(tk.Frame):
         for i in range(10):
             lang.append(oc.get_odds(titan_level, champ_tier,i))
             popu.append("{}".format(i))
-        
-        #data = {
-        #    'Python': 11.27,
-        #    'C': 11.16,
-        #    'Java': 10.46,
-        #    'C++': 7.5,
-        #    'C#': 5.26
-        #}
 
-        languages = popu#data.keys()     # x values
-        popularity = lang#data.values()  # y values
-
-        # create a figure
-        figure = Figure(figsize=(6, 4), dpi=100)
-
+        languages = popu
+        popularity = lang
+        val = [0,1,2,3,4,5,8,2,1,4]
+        update_btn = tk.Button(self, text="Update values", command=lambda : self.change_plot(val))
+        update_btn.pack()
+        # create a figure # figsize=(6, 4), dpi=100
+        self.figure = Figure()
         # create FigureCanvasTkAgg object
-        figure_canvas = FigureCanvasTkAgg(figure, self)
-
+        figure_canvas = FigureCanvasTkAgg(self.figure, self)
         # create axes
-        axes = figure.add_subplot()
-
+        axes = self.figure.add_subplot()
         # create the barchart
-        axes.bar(languages, popularity)
-        #axes.set_title('Top 5 Programming Languages')
-        #axes.set_ylabel('Popularity')
+        self.line, = axes.plot(lang,popu, "b-")
+        figure_canvas.get_tk_widget().pack()    #side=tk.TOP, fill=tk.BOTH, expand=1
 
-        figure_canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+    def change_plot(self, values):
+            self.line.set_ydata(values)
+            self.figure.canvas.draw()
+            self.figure.canvas.flush_events()
 
 if __name__ == "__main__":
     top = tk.Tk()
