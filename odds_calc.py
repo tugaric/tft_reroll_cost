@@ -1,7 +1,6 @@
 import json
 
-
-def get_odds(titan_level, tier_of_champion, nbr_of_champs_out_of_pool=0):
+def get_odds(titan_level, tier_of_champion, shop_rerolls=1, nbr_of_champs_out_of_pool=0):
 
     # get the json files with "reroll chances" & "champion pool"
     with open("reroll_chances.json") as json_file:
@@ -26,32 +25,11 @@ def get_odds(titan_level, tier_of_champion, nbr_of_champs_out_of_pool=0):
     # Multiplying the odds 
     find_champ_per_shop = shop_odds * find_champion_odds
 
-    return find_champ_per_shop
-
     # 5 champions per shop reroll
-    #reroll = 5
-
-    #while odds_of_finding_champion < 0.5:
-    #    no_hit = (1 - find_champ_per_shop)**reroll
-    #    odds_of_finding_champion = 1 - no_hit
-    #    reroll += 5
-
-def three_star_reroll_cost(titan_level, champ_tier):
-
-    # Initialize variable
-    odd_res = []
-
-    # input
-    for i in range(3):
-        total_odds, shop_odds = get_odds(titan_level, champ_tier, i)
-        odd_res.append((total_odds, shop_odds))
-        print("titan lvl : " + titan_level + "\nFinding champ of : "+ champ_tier)
-        print("Gold cost for < 50%: " + str(shop_odds*2))
-    print(odd_res)
-
+    reroll = 5
+    return 1 - (1 - find_champ_per_shop)**(reroll*shop_rerolls)
 
 def calc_odds():
-
     # Set of inputs:
     input_set = [
         ("Level_6", "Tier4", 2),
@@ -65,7 +43,5 @@ def calc_odds():
         print("titan lvl : " + input[0] + "\nFinding champ of : "+ input[1])
         print("Gold cost for < 50%: " + str(shop_odds*2))
 
-
 if __name__ == "__main__":
-    for i in range(10):
-        print(get_odds("Level_6", "Tier3",i))
+    print(get_odds("Level_6", "Tier3",nbr_of_champs_out_of_pool=0))
